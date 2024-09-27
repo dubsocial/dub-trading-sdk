@@ -1,0 +1,30 @@
+{
+	"name": "dub-sdk",
+	"version": "1.0.0",
+	"private": true,
+	"description": "",
+	"type": "commonjs",
+	"main": "api/index.ts",
+	"files": [
+		"src",
+		"types"
+	],
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon api/index.ts deploy",
+		"lint": "tsc --noEmit",
+		"dev": "nodemon api/index.ts local",
+		"schema": "supabase gen types --lang=typescript --project-id viasvrxjpuzcjdxoqhxk --schema public > types/supabase.ts",
+		"contracts": "wagmi generate",
+		"format": "biome format . --write"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@coral-xyz/anchor": "^0.30.1",
+		"@solana/spl-token": "^0.4.8",
+		"@solana/web3.js": "^1.95.3"
+	},
+	"devDependencies": {}
+}
