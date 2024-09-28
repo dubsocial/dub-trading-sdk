@@ -1,5 +1,12 @@
+
 import { Idl } from "@coral-xyz/anchor";
 
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/bonding_curve.json`.
+ */
 export type BondingCurve = {
   "address": "8PrwREeewaCXs1rmo5NRRseJN7LRBVc9Pujqswg6VX9D",
   "metadata": {
@@ -175,6 +182,10 @@ export type BondingCurve = {
           }
         },
         {
+          "name": "metadata",
+          "writable": true
+        },
+        {
           "name": "mintBase",
           "docs": [
             "This is the mint of the base token."
@@ -242,10 +253,17 @@ export type BondingCurve = {
           "signer": true
         },
         {
-          "name": "tokenProgram",
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "mplTokenMetadataProgram",
           "docs": [
             "Solana ecosystem accounts"
-          ],
+          ]
+        },
+        {
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -257,7 +275,20 @@ export type BondingCurve = {
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "name": "uri",
+          "type": "string"
+        }
+      ]
     },
     {
       "name": "deployBondingPool",
@@ -555,6 +586,7 @@ export type BondingCurve = {
         },
         {
           "name": "poolTokenLockAccount",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -798,6 +830,29 @@ export type BondingCurve = {
                 "kind": "account",
                 "path": "amm.id",
                 "account": "amm"
+              }
+            ]
+          },
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "amm"
+              },
+              {
+                "kind": "account",
+                "path": "ammCoinMint"
+              },
+              {
+                "kind": "account",
+                "path": "ammPcMint"
               }
             ]
           }
@@ -2063,6 +2118,19 @@ export type BondingCurve = {
       ]
     },
     {
+      "name": "migrateEvent",
+      "discriminator": [
+        216,
+        175,
+        231,
+        95,
+        45,
+        98,
+        108,
+        21
+      ]
+    },
+    {
       "name": "tradeEvent",
       "discriminator": [
         189,
@@ -2073,6 +2141,19 @@ export type BondingCurve = {
         230,
         97,
         238
+      ]
+    },
+    {
+      "name": "tradingCompleteEvent",
+      "discriminator": [
+        169,
+        112,
+        158,
+        7,
+        182,
+        53,
+        245,
+        176
       ]
     }
   ],
@@ -2119,21 +2200,26 @@ export type BondingCurve = {
     },
     {
       "code": 6008,
+      "name": "tradingComplete",
+      "msg": "Trading complete. This pool is now closed."
+    },
+    {
+      "code": 6009,
       "name": "lockAlreadyInitialized",
       "msg": "Lock already initialized"
     },
     {
-      "code": 6009,
+      "code": 6010,
       "name": "distributorAlreadyInitialized",
       "msg": "Distributor already initialized"
     },
     {
-      "code": 6010,
+      "code": 6011,
       "name": "poolAlreadyInitialized",
       "msg": "Pool already initialized"
     },
     {
-      "code": 6011,
+      "code": 6012,
       "name": "slippageExceeded",
       "msg": "Slippage exceeded"
     }
@@ -2338,6 +2424,22 @@ export type BondingCurve = {
       }
     },
     {
+      "name": "migrateEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "raydiumCpmmAddress",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "pool",
       "type": {
         "kind": "struct",
@@ -2391,6 +2493,10 @@ export type BondingCurve = {
           {
             "name": "migrateReserveB",
             "type": "u64"
+          },
+          {
+            "name": "complete",
+            "type": "bool"
           },
           {
             "name": "poolInitialized",
@@ -2462,6 +2568,26 @@ export type BondingCurve = {
       }
     },
     {
+      "name": "tradingCompleteEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bondingCurve",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "bonding_curve::state::Padding",
       "generics": [
         {
@@ -2522,6 +2648,13 @@ export type BondingCurve = {
   ]
 };
 
+
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/bonding_curve.json`.
+ */
 export const IDL: BondingCurve = {
   "address": "8PrwREeewaCXs1rmo5NRRseJN7LRBVc9Pujqswg6VX9D",
   "metadata": {
@@ -2697,6 +2830,10 @@ export const IDL: BondingCurve = {
           }
         },
         {
+          "name": "metadata",
+          "writable": true
+        },
+        {
           "name": "mintBase",
           "docs": [
             "This is the mint of the base token."
@@ -2764,10 +2901,17 @@ export const IDL: BondingCurve = {
           "signer": true
         },
         {
-          "name": "tokenProgram",
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "mplTokenMetadataProgram",
           "docs": [
             "Solana ecosystem accounts"
-          ],
+          ]
+        },
+        {
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -2779,7 +2923,20 @@ export const IDL: BondingCurve = {
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "name": "uri",
+          "type": "string"
+        }
+      ]
     },
     {
       "name": "deployBondingPool",
@@ -3077,6 +3234,7 @@ export const IDL: BondingCurve = {
         },
         {
           "name": "poolTokenLockAccount",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3320,6 +3478,29 @@ export const IDL: BondingCurve = {
                 "kind": "account",
                 "path": "amm.id",
                 "account": "amm"
+              }
+            ]
+          },
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "amm"
+              },
+              {
+                "kind": "account",
+                "path": "ammCoinMint"
+              },
+              {
+                "kind": "account",
+                "path": "ammPcMint"
               }
             ]
           }
@@ -4585,6 +4766,19 @@ export const IDL: BondingCurve = {
       ]
     },
     {
+      "name": "migrateEvent",
+      "discriminator": [
+        216,
+        175,
+        231,
+        95,
+        45,
+        98,
+        108,
+        21
+      ]
+    },
+    {
       "name": "tradeEvent",
       "discriminator": [
         189,
@@ -4595,6 +4789,19 @@ export const IDL: BondingCurve = {
         230,
         97,
         238
+      ]
+    },
+    {
+      "name": "tradingCompleteEvent",
+      "discriminator": [
+        169,
+        112,
+        158,
+        7,
+        182,
+        53,
+        245,
+        176
       ]
     }
   ],
@@ -4641,21 +4848,26 @@ export const IDL: BondingCurve = {
     },
     {
       "code": 6008,
+      "name": "tradingComplete",
+      "msg": "Trading complete. This pool is now closed."
+    },
+    {
+      "code": 6009,
       "name": "lockAlreadyInitialized",
       "msg": "Lock already initialized"
     },
     {
-      "code": 6009,
+      "code": 6010,
       "name": "distributorAlreadyInitialized",
       "msg": "Distributor already initialized"
     },
     {
-      "code": 6010,
+      "code": 6011,
       "name": "poolAlreadyInitialized",
       "msg": "Pool already initialized"
     },
     {
-      "code": 6011,
+      "code": 6012,
       "name": "slippageExceeded",
       "msg": "Slippage exceeded"
     }
@@ -4860,6 +5072,22 @@ export const IDL: BondingCurve = {
       }
     },
     {
+      "name": "migrateEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "raydiumCpmmAddress",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "pool",
       "type": {
         "kind": "struct",
@@ -4913,6 +5141,10 @@ export const IDL: BondingCurve = {
           {
             "name": "migrateReserveB",
             "type": "u64"
+          },
+          {
+            "name": "complete",
+            "type": "bool"
           },
           {
             "name": "poolInitialized",
@@ -4984,6 +5216,26 @@ export const IDL: BondingCurve = {
       }
     },
     {
+      "name": "tradingCompleteEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bondingCurve",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "bonding_curve::state::Padding",
       "generics": [
         {
@@ -5042,4 +5294,4 @@ export const IDL: BondingCurve = {
       "value": "[108, 111, 99, 107, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121]"
     }
   ]
-};
+  };

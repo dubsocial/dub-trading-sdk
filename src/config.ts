@@ -50,6 +50,9 @@ export type DubAMMConfig= {
     initialVirtualSolReserves: bigint;
     initialVirtualTokenReserves: bigint;
     bondingCurvePoolReserves: bigint;
+    lockMaster: PublicKey;
+    admin: PublicKey;
+    migrator: PublicKey;
 }
 
 export const TESTNET_AMM_CONFIG: DubAMMConfig = {
@@ -60,5 +63,8 @@ export const TESTNET_AMM_CONFIG: DubAMMConfig = {
     feeBips: TESTNET_FEE_BIPS,
     initialVirtualSolReserves: TESTNET_INITIAL_VIRTUAL_SOL_RESERVES,
     initialVirtualTokenReserves: TESTNET_INITIAL_VIRTUAL_TOKEN_RESERVES,
-    bondingCurvePoolReserves: TESTNET_BONDING_CURVE_POOL_RESERVES
+    bondingCurvePoolReserves: TESTNET_BONDING_CURVE_POOL_RESERVES,
+    lockMaster: LOCK_MASTER,
+    admin: ADMIN,
+    migrator: MIGRATOR
 }
