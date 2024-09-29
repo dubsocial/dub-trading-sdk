@@ -1,12 +1,12 @@
 import { Connection, PublicKey } from "@solana/web3.js";
-import { DubAMMConfig, TESTNET_AMM_CONFIG } from "./config";
+import { DubAMMConfig, DEFAULT_AMM_CONFIG } from "./config";
 import { getAnchorProgram } from "./trade";
 import { getBondingCurveAccounts } from "./params";
 
 export async function getPoolReserves (
     mint: PublicKey,
     connection: Connection,
-    config: DubAMMConfig = TESTNET_AMM_CONFIG,
+    config: DubAMMConfig = DEFAULT_AMM_CONFIG,
 ): Promise<{
     baseTokenReserve: bigint;
     quoteTokenReserve: bigint;

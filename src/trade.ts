@@ -1,17 +1,17 @@
 import { AnchorProvider, Program } from '@coral-xyz/anchor';
 import { Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
-import { IDL, BondingCurve } from '../idl/bonding_curve';
-import { DubAMMConfig, TESTNET_AMM_CONFIG, wSOL_ADDRESS } from './config';
+import { DubAMMConfig, DEFAULT_AMM_CONFIG, wSOL_ADDRESS } from './config';
 import { getBondingCurveAccounts } from './params';
 import * as anchor from '@coral-xyz/anchor';
 import { createAssociatedTokenAccountIdempotentInstruction, createCloseAccountInstruction, createSyncNativeInstruction, getAssociatedTokenAddressSync } from '@solana/spl-token';
+import { BondingCurve, IDL } from '../idl/bonding_curve';
 
 // DANGER: DO NOT USE
 // Hacky way to get anchor program 
 export const getAnchorProgram = () => {
-    const connectionInternal = new Connection("https://api.devnet.solana.com");
+    const connectionInternal = new Connection("https://api.mainnet-beta.solana.com");
     const provider = new AnchorProvider(connectionInternal, {
-        publicKey: new PublicKey("8PrwREeewaCXs1rmo5NRRseJN7LRBVc9Pujqswg6VX9D"),
+        publicKey: new PublicKey("5wsTqYnPwsj3QsYrVK9cGtresyfREZXqEGAxGFSb35LK"),
         signTransaction: () => Promise.resolve() as any,
         signAllTransactions: () => Promise.resolve([]),
     }, { preflightCommitment: 'confirmed' });
@@ -35,7 +35,7 @@ export const tradeTransactionIx = async ({
     trader,
     tokenMint,
     tradeAmountRaw,
-    ammConfig = TESTNET_AMM_CONFIG,
+    ammConfig = DEFAULT_AMM_CONFIG,
     minimumAmountOut = 0,
     swapType = "buy",
 }: {
@@ -91,7 +91,7 @@ export const tradeTransactionBuyTx = async ({
     tokenMint,
     tradeAmountRaw,
     minimumAmountOut = 0,
-    ammConfig = TESTNET_AMM_CONFIG,
+    ammConfig = DEFAULT_AMM_CONFIG,
 }: {
     trader: PublicKey;
     tokenMint: PublicKey;
@@ -152,7 +152,7 @@ export const tradeTransactionSellTx = async ({
     tokenMint,
     tradeAmountRaw,
     minimumAmountOut = 0,
-    ammConfig = TESTNET_AMM_CONFIG,
+    ammConfig = DEFAULT_AMM_CONFIG,
 }: {
     trader: PublicKey;
     tokenMint: PublicKey;

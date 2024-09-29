@@ -1,7 +1,7 @@
 import { AnchorProvider, Program } from '@coral-xyz/anchor';
 import { Connection, Keypair, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
 import { IDL, BondingCurve } from '../idl/bonding_curve';
-import { DubAMMConfig, TESTNET_AMM_CONFIG, wSOL_ADDRESS } from './config';
+import { DubAMMConfig, DEFAULT_AMM_CONFIG, wSOL_ADDRESS } from './config';
 import { getBondingCurveAccounts } from './params';
 import * as anchor from '@coral-xyz/anchor';
 import { BondingCurveConfigs, getBondingCurveConfigs } from './create';
@@ -111,7 +111,7 @@ export const createTokenInstructions = async (
 // bondingDeployMint & bondingDeployPool
 export const deployBondingTransactions = async ({
     creator,
-    ammConfig = TESTNET_AMM_CONFIG,
+    ammConfig = DEFAULT_AMM_CONFIG,
     name,
     symbol,
     uri,
@@ -125,9 +125,7 @@ export const deployBondingTransactions = async ({
     const program = getAnchorProgram({
         publicKey: creator
     });
-
     const mintTokenBumpKeypair = Keypair.generate();
-
     const bondingCurveConfigs = getBondingCurveConfigs({
         dev: creator,
         mintBump: mintTokenBumpKeypair.publicKey,

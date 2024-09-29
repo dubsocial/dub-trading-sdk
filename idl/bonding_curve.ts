@@ -1,6 +1,3 @@
-
-import { Idl } from "@coral-xyz/anchor";
-
 /**
  * Program IDL in camelCase format in order to be used in JS/TS.
  *
@@ -8,7 +5,7 @@ import { Idl } from "@coral-xyz/anchor";
  * IDL can be found at `target/idl/bonding_curve.json`.
  */
 export type BondingCurve = {
-  "address": "8PrwREeewaCXs1rmo5NRRseJN7LRBVc9Pujqswg6VX9D",
+  "address": "5wsTqYnPwsj3QsYrVK9cGtresyfREZXqEGAxGFSb35LK",
   "metadata": {
     "name": "bondingCurve",
     "version": "0.1.0",
@@ -2333,28 +2330,28 @@ export type BondingCurve = {
         "kind": "struct",
         "fields": [
           {
-            "name": "creator",
-            "type": "pubkey"
+            "name": "name",
+            "type": "string"
           },
           {
-            "name": "amm",
-            "type": "pubkey"
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "type": "string"
           },
           {
             "name": "mint",
             "type": "pubkey"
           },
           {
-            "name": "baseAmount",
-            "type": "u64"
+            "name": "bondingCurve",
+            "type": "pubkey"
           },
           {
-            "name": "quoteAmount",
-            "type": "u64"
-          },
-          {
-            "name": "timestamp",
-            "type": "i64"
+            "name": "creator",
+            "type": "pubkey"
           }
         ]
       }
@@ -2648,15 +2645,8 @@ export type BondingCurve = {
   ]
 };
 
-
-/**
- * Program IDL in camelCase format in order to be used in JS/TS.
- *
- * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/bonding_curve.json`.
- */
 export const IDL: BondingCurve = {
-  "address": "8PrwREeewaCXs1rmo5NRRseJN7LRBVc9Pujqswg6VX9D",
+  "address": "5wsTqYnPwsj3QsYrVK9cGtresyfREZXqEGAxGFSb35LK",
   "metadata": {
     "name": "bondingCurve",
     "version": "0.1.0",
@@ -4981,28 +4971,28 @@ export const IDL: BondingCurve = {
         "kind": "struct",
         "fields": [
           {
-            "name": "creator",
-            "type": "pubkey"
+            "name": "name",
+            "type": "string"
           },
           {
-            "name": "amm",
-            "type": "pubkey"
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "type": "string"
           },
           {
             "name": "mint",
             "type": "pubkey"
           },
           {
-            "name": "baseAmount",
-            "type": "u64"
+            "name": "bondingCurve",
+            "type": "pubkey"
           },
           {
-            "name": "quoteAmount",
-            "type": "u64"
-          },
-          {
-            "name": "timestamp",
-            "type": "i64"
+            "name": "creator",
+            "type": "pubkey"
           }
         ]
       }
@@ -5294,4 +5284,4 @@ export const IDL: BondingCurve = {
       "value": "[108, 111, 99, 107, 95, 97, 117, 116, 104, 111, 114, 105, 116, 121]"
     }
   ]
-  };
+};

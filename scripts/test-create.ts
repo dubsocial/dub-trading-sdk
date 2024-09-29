@@ -3,7 +3,7 @@ import { tradeTransactionBuyTx, tradeTransactionIx, tradeTransactionSellTx } fro
 import { readFileSync } from 'fs';
 import { Keypair } from '@solana/web3.js';
 import { estimateTokensOut, getPoolReserves } from "../src/estimate";
-import { TESTNET_AMM_CONFIG } from "../src/config";
+import { DEFAULT_AMM_CONFIG } from "../src/config";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import { createTokenInstructions, deployBondingTransactions } from "../src/bondingDeploy";
 

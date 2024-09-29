@@ -38,7 +38,9 @@ export const getBondingCurveAccounts = ({
   }): BondingCurveConfigs => {
         const ammId = ammConfig.ammId;
         const wSOLaddress = customWSOLAddress ? customWSOLAddress : wSOL_ADDRESS;
+
         const ammKey = PublicKey.findProgramAddressSync([ammId.toBuffer()], programId)[0];
+
         const ammAuthority = PublicKey.findProgramAddressSync(
             [
               ammKey.toBuffer(), 

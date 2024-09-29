@@ -1,7 +1,11 @@
 import { Keypair, PublicKey } from '@solana/web3.js';
-import { DubAMMConfig, LOCK_PROGRAM_ADDRESS, MERKLE_DISTRIBUTOR_PROGRAM_ADDRESS, PROGRAM_ADDRESS, TESTNET_AMM_CONFIG, VESTING_PROGRAM_ADDRESS, wSOL_ADDRESS } from './config';
+import { DubAMMConfig, LOCK_PROGRAM_ADDRESS, MERKLE_DISTRIBUTOR_PROGRAM_ADDRESS, PROGRAM_ADDRESS, DEFAULT_AMM_CONFIG, VESTING_PROGRAM_ADDRESS, wSOL_ADDRESS } from './config';
 import * as anchor from '@coral-xyz/anchor';
-import { getAssociatedTokenAddressSync } from '@solana/spl-token';
+let getAssociatedTokenAddressSync: (mint: PublicKey, owner: PublicKey, allowOwnerOffCurve?: boolean | undefined, programId?: PublicKey | undefined, associatedTokenProgramId?: PublicKey | undefined) => PublicKey;
+(async () => {
+  const module = await import('@solana/spl-token');
+  getAssociatedTokenAddressSync = module.getAssociatedTokenAddressSync;
+})();
 
 export type BondingCurveConfigs = {
   ammId: PublicKey;
@@ -39,7 +43,7 @@ export const getBondingCurveConfigs = ({
   dev,
   mint,
   mintBump,
-  ammConfig = TESTNET_AMM_CONFIG
+  ammConfig = DEFAULT_AMM_CONFIG
 }: {
   dev: PublicKey,
   mint?: PublicKey,

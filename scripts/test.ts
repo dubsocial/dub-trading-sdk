@@ -3,34 +3,34 @@ import { tradeTransactionBuyTx, tradeTransactionIx, tradeTransactionSellTx } fro
 import { readFileSync } from 'fs';
 import { Keypair } from '@solana/web3.js';
 import { estimateTokensOut, getPoolReserves } from "../src/estimate";
-import { TESTNET_AMM_CONFIG } from "../src/config";
+import { DEFAULT_AMM_CONFIG } from "../src/config";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 
 // 
 // ADD YOUR KEYPAIR HERE.
 // 
 const keypair = Keypair.fromSecretKey(
-    new Uint8Array(JSON.parse(readFileSync('PATH_TO_KEYPAIR.json', 'utf8')))
+    new Uint8Array(JSON.parse(readFileSync('/Users/pun/.config/solana/id.json', 'utf8')))
 );
 
 const traderPublicKey = keypair.publicKey;
-const TOKEN_MINT = new PublicKey("B1xQdJ57Uy7AskZ6YnwdQJDKxmnf4YrkwetU23XbFTFC");
-const SOLANA_NETWORK_URL = "https://api.devnet.solana.com";
+const TOKEN_MINT = new PublicKey("ew8aktApWa3bXeLbsBTPudedn3anrLiKrcoh7HCcJTR");
+const SOLANA_NETWORK_URL = "https://api.mainnet-beta.solana.com";
 
 (async () => {
 
-    const inputAmount = 1000000;
+    const inputAmount = 10000;
 
     const connection = new Connection(SOLANA_NETWORK_URL);
     const { baseTokenReserve, quoteTokenReserve } = await getPoolReserves(TOKEN_MINT, connection);
 
-    const outputAmount = estimateTokensOut(TESTNET_AMM_CONFIG, true, BigInt(inputAmount), baseTokenReserve, quoteTokenReserve);
+    const outputAmount = estimateTokensOut(DEFAULT_AMM_CONFIG, true, BigInt(inputAmount), baseTokenReserve, quoteTokenReserve);
     console.log(outputAmount);
 
     const tx = await tradeTransactionBuyTx({
         trader: traderPublicKey,
         tokenMint: TOKEN_MINT,
-        tradeAmountRaw: 1000000,
+        tradeAmountRaw: 10000,
         minimumAmountOut: 0,
     })
 
